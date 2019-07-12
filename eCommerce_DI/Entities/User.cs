@@ -14,8 +14,9 @@ namespace ECommerce_Domain.Entities
         public bool UserBlock { get; set; }
         public bool PasswordReset { get; set; }
         public string Email { get; set; }
-        public UserAddress Address { get; set; }
+        public List<UserAddress> Addresses { get; set; }
         public bool Active { get; set; } = true;
+        public List<ClientCreditCard> CreditCards { get; set; }
         public DateTime CreationDate { get; set; }
     }
 }

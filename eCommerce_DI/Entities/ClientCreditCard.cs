@@ -9,6 +9,7 @@ namespace ECommerce_Domain.Entities
     {
         public long Id { get; set; }
         public string Number { get; set; }
+        public User User { get; set; }
         public string CardHolder { get; set; }
         public DateTime CreationDate { get; set; }
         public int SecurityCode { get; set; }

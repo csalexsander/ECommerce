@@ -12,6 +12,7 @@ namespace ECommerce_Domain.Entities
         public string Complement { get; set; }
         public string Neighborhood { get; set; }
         public City City { get; set; }
+        public User User { get; set; }
         public State State { get; set; }
         public Country Country { get; set; }
         public bool Current { get; set; }
