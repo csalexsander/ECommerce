@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce", "ECommerce\ECommerce.csproj", "{30BADB1E-2444-4A8B-A6C1-FDCC4EF566B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce", "ECommerce\ECommerce.csproj", "{30BADB1E-2444-4A8B-A6C1-FDCC4EF566B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce_Domain", "eCommerce_DI\ECommerce_Domain.csproj", "{FBD6CA3E-0E8E-4DD5-ABBA-A89D4399FB5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce_Domain", "eCommerce_DI\ECommerce_Domain.csproj", "{FBD6CA3E-0E8E-4DD5-ABBA-A89D4399FB5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce_Tests", "ECommerce_Tests\ECommerce_Tests.csproj", "{CAC7796C-693A-4740-8ACD-E965B5F519D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce_Tests", "ECommerce_Tests\ECommerce_Tests.csproj", "{CAC7796C-693A-4740-8ACD-E965B5F519D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce_Repository", "ECommerce_Repository\ECommerce_Repository.csproj", "{929C2A1E-1984-4BD5-A870-3394E0F8D3E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce_Repository", "ECommerce_Repository\ECommerce_Repository.csproj", "{929C2A1E-1984-4BD5-A870-3394E0F8D3E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce_Application", "ECommerce_Application\ECommerce_Application.csproj", "{6C4CC3A3-8AF5-4148-B09A-298F2BDBC48F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce_Application", "ECommerce_Application\ECommerce_Application.csproj", "{6C4CC3A3-8AF5-4148-B09A-298F2BDBC48F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce_Depence_Injector", "ECommerce_Depence_Injector\ECommerce_Depence_Injector.csproj", "{B036711A-E722-4337-9E4F-DDB91DF6E749}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommerce_Depence_Injector", "ECommerce_Depence_Injector\ECommerce_Depence_Injector.csproj", "{B036711A-E722-4337-9E4F-DDB91DF6E749}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce_Commons", "ECommerce_Commons\ECommerce_Commons.csproj", "{E24B1A45-E545-4484-B6A3-7111D36FA12C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{B036711A-E722-4337-9E4F-DDB91DF6E749}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B036711A-E722-4337-9E4F-DDB91DF6E749}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B036711A-E722-4337-9E4F-DDB91DF6E749}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E24B1A45-E545-4484-B6A3-7111D36FA12C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E24B1A45-E545-4484-B6A3-7111D36FA12C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E24B1A45-E545-4484-B6A3-7111D36FA12C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E24B1A45-E545-4484-B6A3-7111D36FA12C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

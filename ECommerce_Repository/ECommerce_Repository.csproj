@@ -4,4 +4,12 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Context\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\eCommerce_DI\ECommerce_Domain.csproj" />
+  </ItemGroup>
+
 </Project>

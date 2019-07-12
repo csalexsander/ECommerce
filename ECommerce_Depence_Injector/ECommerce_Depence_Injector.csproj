@@ -9,4 +9,11 @@
     <Folder Include="Injection\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ECommerce_Application\ECommerce_Application.csproj" />
+    <ProjectReference Include="..\eCommerce_DI\ECommerce_Domain.csproj" />
+    <ProjectReference Include="..\ECommerce_Repository\ECommerce_Repository.csproj" />
+    <ProjectReference Include="..\ECommerce_Tests\ECommerce_Tests.csproj" />
+  </ItemGroup>
+
 </Project>
