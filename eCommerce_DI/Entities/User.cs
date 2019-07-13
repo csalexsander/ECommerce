@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ECommerce_Domain.Entities
@@ -18,5 +19,6 @@ namespace ECommerce_Domain.Entities
         public bool Active { get; set; } = true;
         public List<ClientCreditCard> CreditCards { get; set; }
         public DateTime CreationDate { get; set; }
+
     }
 }

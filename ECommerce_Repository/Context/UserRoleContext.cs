@@ -6,16 +6,15 @@ using System.Text;
 
 namespace ECommerce_Repository.Context
 {
-    public class UserContext : BaseContext
+    public class UserRoleContext : BaseContext
     {
-        public DbSet<User> Users { get; set; }
-
+        public DbSet<UserRole> UserRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<UserRole>(entity =>
             {
-                entity.ToTable("Users");
+                entity.ToTable("UserRoles");
                 entity.HasKey(x => x.Id);
             });
         }

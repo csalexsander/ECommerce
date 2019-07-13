@@ -6,18 +6,19 @@ using System.Text;
 
 namespace ECommerce_Repository.Context
 {
-    public class UserContext : BaseContext
+    public class CountryContext : BaseContext
     {
-        public DbSet<User> Users { get; set; }
-
+        public DbSet<Country> Countries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>(entity =>
+           
+            modelBuilder.Entity<Country>(entity =>
             {
-                entity.ToTable("Users");
                 entity.HasKey(x => x.Id);
+                entity.ToTable("Countries");
             });
         }
     }
 }
+

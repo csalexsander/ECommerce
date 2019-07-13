@@ -5,12 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
+    <ProjectReference Include="..\ECommerce_Commons\ECommerce_Commons.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Service\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ECommerce_Commons\ECommerce_Commons.csproj" />
+    <Reference Include="System">
+      <HintPath>System</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

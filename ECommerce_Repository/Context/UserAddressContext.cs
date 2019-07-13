@@ -6,17 +6,18 @@ using System.Text;
 
 namespace ECommerce_Repository.Context
 {
-    public class UserContext : BaseContext
+    public class UserAddressContext : BaseContext
     {
-        public DbSet<User> Users { get; set; }
-
+        public DbSet<UserAddress> UserAddresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<UserAddress>(entity =>
             {
-                entity.ToTable("Users");
+                entity.ToTable("UserAddresses");
                 entity.HasKey(x => x.Id);
+                entity.HasOne(x => x.User).WithMany(x => x.Addresses);
+
             });
         }
     }
