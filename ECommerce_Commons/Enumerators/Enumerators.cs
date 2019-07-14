@@ -13,6 +13,13 @@ namespace ECommerce_Commons.Enumerators
             Administrator
         }
 
+        public enum LoginType
+        {
+            Site,
+            API,
+            Administrator
+        }
+
         public enum CreditCardBanner
         {
             MasterCard = 1,

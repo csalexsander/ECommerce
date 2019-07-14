@@ -10,7 +10,7 @@ namespace ECommerce_Repository.Repositories
 {
     public class StateRepository : BaseRepository<State>, IStateRepository
     {
-        public StateRepository(StateContext context) : base(context)
+        public StateRepository(BaseContext context) : base(context)
         {
         }
     }

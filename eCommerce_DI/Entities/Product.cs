@@ -4,9 +4,8 @@ using System.Text;
 
 namespace ECommerce_Domain.Entities
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public long Id { get; set; }
         public Guid Guid { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -14,8 +13,6 @@ namespace ECommerce_Domain.Entities
         public ProductBrand Brand { get; set; }
         public string Model { get; set; }
         public ProductDimension Dimensions { get; set; }
-        public List<ProductStock> Stock { get; set; }
-        public bool Active { get; set; } = true;
-        public DateTime CreationDate { get; set; }
+        public virtual List<ProductStock> Stock { get; set; }
     }
 }

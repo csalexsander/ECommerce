@@ -9,7 +9,7 @@ namespace ECommerce_Repository.Repositories
 {
     public class UserRoleRepository : BaseRepository<UserRole>, IUserRoleRepository
     {
-        public UserRoleRepository(UserRoleContext context) : base(context)
+        public UserRoleRepository(BaseContext context) : base(context)
         {
 
         }

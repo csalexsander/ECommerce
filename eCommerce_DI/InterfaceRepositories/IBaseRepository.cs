@@ -10,9 +10,15 @@ namespace ECommerce_Domain.InterfaceRepositories
         TEntity Get(long Id);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
-        void Add(TEntity entity);
+        TEntity Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
+        int Count(Expression<Func<TEntity, bool>> predicate);
+        void Update(TEntity entity);
+        void OpenTransaction();
+        void CommitTransaction();
+        void RollBack();
+        void Dispose();
     }
 }

@@ -4,12 +4,10 @@ using System.Text;
 
 namespace ECommerce_Domain.Entities
 {
-    public class State
+    public class State : BaseEntity
     {
-        public long Id { get; set; }
         public string Name { get; set; }
         public Country Country { get; set; }
-        public bool Active { get; set; } = true;
-        public DateTime CreationDate { get; set; }
+        public virtual List<City> Cities { get; set; }
     }
 }

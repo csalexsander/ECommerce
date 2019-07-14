@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Application\" />
+    <ProjectReference Include="..\eCommerce_DI\ECommerce_Domain.csproj" />
   </ItemGroup>
 
 </Project>

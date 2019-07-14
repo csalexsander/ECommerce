@@ -10,7 +10,7 @@ namespace ECommerce_Repository.Repositories
 {
     public class ClientCreditCardRepository : BaseRepository<ClientCreditCard>, IClientCreditCardRepository
     {
-        public ClientCreditCardRepository(ClientCreditCardContext context) : base(context)
+        public ClientCreditCardRepository(BaseContext context) : base(context)
         {
         }
     }

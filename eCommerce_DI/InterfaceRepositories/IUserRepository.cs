@@ -7,6 +7,6 @@ namespace ECommerce_Domain.InterfaceRepositories
 {
     public interface IUserRepository : IBaseRepository<User>
     {
-                
+        IEnumerable<User> GetAllActives();
     }
 }

@@ -1,13 +1,13 @@
-﻿using System;
+﻿using ECommerce_Commons.Enumerators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace ECommerce_Domain.Entities
 {
-    public class User
+    public class User : BaseEntity
     {
-        public long Id { get; set; }
         public string Name { get; set; }
         public UserRole Role { get; set; }
         public string UserName { get; set; }
@@ -15,10 +15,28 @@ namespace ECommerce_Domain.Entities
         public bool UserBlock { get; set; }
         public bool PasswordReset { get; set; }
         public string Email { get; set; }
-        public List<UserAddress> Addresses { get; set; }
-        public bool Active { get; set; } = true;
-        public List<ClientCreditCard> CreditCards { get; set; }
-        public DateTime CreationDate { get; set; }
+        public virtual List<UserAddress> Addresses { get; set; }
+        public virtual List<ClientCreditCard> CreditCards { get; set; }
+
+        public bool HasAccess(Enumerators.LoginType LoginType)
+        {
+            if (!Active)
+            {
+                return Active;
+            }
+
+            switch (LoginType)
+            {
+                case Enumerators.LoginType.Site:
+                    return Role.AccessLevel == Enumerators.AccessLevel.Client;
+                case Enumerators.LoginType.API:
+                    return Role.AccessLevel == Enumerators.AccessLevel.Client;
+                case Enumerators.LoginType.Administrator:
+                    return !(Role.AccessLevel == Enumerators.AccessLevel.Client);
+                default:
+                    return false;
+            }
+        }
 
     }
 }

@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190713211407_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190713212107_v0.cs" />
+    <Compile Remove="Migrations\20190713212249_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190713212453_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190713212631_InitialCreate.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />

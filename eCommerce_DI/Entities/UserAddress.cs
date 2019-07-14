@@ -4,9 +4,8 @@ using System.Text;
 
 namespace ECommerce_Domain.Entities
 {
-    public class UserAddress
+    public class UserAddress : BaseEntity
     {
-        public long Id { get; set; }
         public string Street { get; set; }
         public string Number { get; set; }
         public string Complement { get; set; }
@@ -16,7 +15,5 @@ namespace ECommerce_Domain.Entities
         public State State { get; set; }
         public Country Country { get; set; }
         public bool Current { get; set; }
-        public bool Active { get; set; } = true;
-        public DateTime CreationDate { get; set; }
     }
 }

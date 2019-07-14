@@ -9,7 +9,7 @@ namespace ECommerce_Repository.Repositories
 {
     public class CityRepository : BaseRepository<City>, ICityRepository
     {
-        public CityRepository(CityContext context) : base(context)
+        public CityRepository(BaseContext context) : base(context)
         {
 
         }

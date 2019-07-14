@@ -10,7 +10,7 @@ namespace ECommerce_Repository.Repositories
 {
     public class UserAddressRepository : BaseRepository<UserAddress>, IUserAddressRepository
     {
-        public UserAddressRepository(UserAddressContext context) : base(context)
+        public UserAddressRepository(BaseContext context) : base(context)
         {
         }
     }
