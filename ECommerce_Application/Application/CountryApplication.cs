@@ -1,4 +1,5 @@
-﻿using ECommerce_Application.Interface;
+﻿using AutoMapper;
+using ECommerce_Application.Interface;
 using ECommerce_Domain.Entities;
 using ECommerce_Domain.InterfaceServices;
 using System;
@@ -9,7 +10,7 @@ namespace ECommerce_Application.Application
 {
     public class CountryApplication : BaseApplication<Country>, ICountryApplication
     {
-        public CountryApplication(ICountryService baseService) : base(baseService)
+        public CountryApplication(ICountryService baseService, IMapper mapper) : base(baseService, mapper)
         {
         }
     }

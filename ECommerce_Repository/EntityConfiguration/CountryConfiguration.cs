@@ -13,6 +13,8 @@ namespace ECommerce_Repository.EntityConfiguration
         {
             entity.HasKey(x => x.Id);
 
+            entity.Property(x => x.Id).ValueGeneratedOnAdd();
+
             entity.Property(e => e.CreationDate).IsRequired();
 
             entity.Property(e => e.Name).IsRequired();

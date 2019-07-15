@@ -10,7 +10,7 @@ namespace ECommerce_Application.Interface
     public interface IUserApplication
     {
         IEnumerable<User> GetAllActives();
-        bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType);
+        bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType, ref string ErroMessage);
         User Save(User user);
         User Get(long Id);
         IEnumerable<User> GetAll();

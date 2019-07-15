@@ -1,4 +1,5 @@
-﻿using ECommerce_Application.Interface;
+﻿using AutoMapper;
+using ECommerce_Application.Interface;
 using ECommerce_Domain.InterfaceServices;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,12 @@ namespace ECommerce_Application.Application
     public class BaseApplication<TEntity> : IDisposable, IBaseApplication<TEntity> where TEntity : class
     {
         protected readonly IBaseService<TEntity> _baseService;
+        protected readonly IMapper _Mapper;
+        private IUserAddressService baseService;
 
-        public BaseApplication(IBaseService<TEntity> baseService)
+        public BaseApplication(IBaseService<TEntity> baseService, IMapper mapper)
         {
+            _Mapper = mapper;
             _baseService = baseService;
         }
 

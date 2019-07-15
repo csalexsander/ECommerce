@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ECommerce_Domain.Service
 {
-    public abstract class BaseService<TEntity> : IDisposable ,IBaseService<TEntity> where TEntity : class
+    public class BaseService<TEntity> : IDisposable ,IBaseService<TEntity> where TEntity : class
     {
         protected readonly IBaseRepository<TEntity> _baseRepository;
 
@@ -18,7 +18,9 @@ namespace ECommerce_Domain.Service
 
         public TEntity Save(TEntity entity)
         {
-            var Id = Convert.ToInt32(entity.GetType().GetProperty("Id"));
+            var prop = entity.GetType().GetProperty("Id");
+                        
+            var Id = Convert.ToInt64(prop.GetValue(entity));
 
             if (Id == 0)
             {

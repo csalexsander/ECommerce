@@ -10,7 +10,7 @@ using System.Text;
 
 namespace ECommerce_Repository.Repositories
 {
-    public abstract class BaseRepository<TEntity> : IDisposable, IBaseRepository<TEntity> where TEntity : class
+    public class BaseRepository<TEntity> : IDisposable, IBaseRepository<TEntity> where TEntity : class
     {
         protected readonly BaseContext _Context;
         private IDbContextTransaction _Transaction;
@@ -24,7 +24,7 @@ namespace ECommerce_Repository.Repositories
         {
             var entityReturn = _Context.Set<TEntity>().Add(entity);
             Complete();
-            return entityReturn.Entity ;
+            return entityReturn.Entity;
         }
 
         public void AddRange(IEnumerable<TEntity> entities)

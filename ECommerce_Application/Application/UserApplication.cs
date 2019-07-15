@@ -1,4 +1,5 @@
-﻿using ECommerce_Application.Interface;
+﻿using AutoMapper;
+using ECommerce_Application.Interface;
 using ECommerce_Commons.Enumerators;
 using ECommerce_Domain.Entities;
 using ECommerce_Domain.InterfaceServices;
@@ -11,11 +12,13 @@ namespace ECommerce_Application.Application
 {
     public class UserApplication : IUserApplication
     {
-        readonly IUserService _userService;
+        protected readonly IUserService _userService;
+        protected readonly IMapper _Mapper;
 
-        public UserApplication(IUserService userService)
+        public UserApplication(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _Mapper = mapper;
         }
 
         public int Count(Expression<Func<User, bool>> predicate)
@@ -48,9 +51,9 @@ namespace ECommerce_Application.Application
             return _userService.GetAllActives();
         }
 
-        public bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType)
+        public bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType,ref string ErrorMessage)
         {
-            return _userService.LoginIsValid(userName, password, LoginType);
+            return _userService.LoginIsValid(userName, password, LoginType, ref ErrorMessage);
         }
 
         public void Remove(User entity)

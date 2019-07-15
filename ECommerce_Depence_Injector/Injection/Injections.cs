@@ -1,8 +1,11 @@
-﻿using ECommerce_Application.Application;
+﻿using AutoMapper;
+using ECommerce_Application.Application;
 using ECommerce_Application.Interface;
+using ECommerce_Depence_Injector.AutoMapper;
 using ECommerce_Domain.InterfaceRepositories;
 using ECommerce_Domain.InterfaceServices;
 using ECommerce_Domain.Service;
+using ECommerce_Repository.Context;
 using ECommerce_Repository.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -17,9 +20,10 @@ namespace ECommerce_Depence_Injector.Injection
         {
             RegisterApplications(services);
             RegisterContext(services);
-            RegisterContext(services);
+            RegisterServices(services);
+            AutoMapperConfig.ConfigureMappers(services);
         }
-
+        
         private static void RegisterServices(IServiceCollection services)
         {
             services.AddTransient(typeof(IBaseService<>), typeof(BaseService<>));
@@ -46,6 +50,7 @@ namespace ECommerce_Depence_Injector.Injection
 
         private static void RegisterContext(IServiceCollection services)
         {
+            services.AddTransient<BaseContext, BaseContext>();
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<ICityRepository, CityRepository>();
             services.AddTransient<IStateRepository, StateRepository>();

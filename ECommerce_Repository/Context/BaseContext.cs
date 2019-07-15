@@ -59,13 +59,22 @@ namespace ECommerce_Repository.Context
             {
                 if (entry.State == EntityState.Added)
                 {
-                    var currentValue = entry.Property(nameof(BaseEntity.CreationDate)).CurrentValue.ToString();
+                    var currentValue = entry.Property(nameof(User.Password)).CurrentValue.ToString();
 
                     entry.Property(nameof(User.Password)).CurrentValue = CriptoUtilitary.sha256encrypt(currentValue);
                 }
                 else
                 {
-                    entry.Property(nameof(User.Password)).IsModified = false;
+                    var currentValue = entry.Property(nameof(User.Password)).CurrentValue.ToString();
+
+                    if (string.IsNullOrWhiteSpace(currentValue))
+                    {
+                        entry.Property(nameof(User.Password)).IsModified = false;
+                    }
+                    else
+                    {
+                        entry.Property(nameof(User.Password)).CurrentValue = CriptoUtilitary.sha256encrypt(currentValue);
+                    }                    
                 }
             }
 

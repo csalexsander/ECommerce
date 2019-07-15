@@ -13,6 +13,8 @@ namespace ECommerce_Repository.EntityConfiguration
         {
             entity.ToTable("States");
 
+            entity.Property(x => x.Id).ValueGeneratedOnAdd();
+
             entity.HasKey(x => x.Id);
 
             entity.Property(e => e.CreationDate).IsRequired();

@@ -18,22 +18,30 @@ namespace ECommerce_Domain.Entities
         public virtual List<UserAddress> Addresses { get; set; }
         public virtual List<ClientCreditCard> CreditCards { get; set; }
 
-        public bool HasAccess(Enumerators.LoginType LoginType)
+        public bool HasAccess(Enumerators.LoginType LoginType, ref string ErrorMessage)
         {
             if (!Active)
             {
+                ErrorMessage = "Your user is inactive";
                 return Active;
             }
+
+            bool isClient = Role.AccessLevel == Enumerators.AccessLevel.Client;
+            bool isAdministrator = !(Role.AccessLevel == Enumerators.AccessLevel.Client);
 
             switch (LoginType)
             {
                 case Enumerators.LoginType.Site:
-                    return Role.AccessLevel == Enumerators.AccessLevel.Client;
+                    ErrorMessage = !isClient ? "Unathorized login" : string.Empty;
+                    return isClient;
                 case Enumerators.LoginType.API:
-                    return Role.AccessLevel == Enumerators.AccessLevel.Client;
+                    ErrorMessage = !isClient ? "Unathorized login" : string.Empty;
+                    return isClient;
                 case Enumerators.LoginType.Administrator:
-                    return !(Role.AccessLevel == Enumerators.AccessLevel.Client);
+                    ErrorMessage = !isAdministrator ? "Unathorized login" : string.Empty;
+                    return isAdministrator;
                 default:
+                    ErrorMessage = "Unathorized login";
                     return false;
             }
         }

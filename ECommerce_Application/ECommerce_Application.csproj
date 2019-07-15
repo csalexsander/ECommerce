@@ -8,4 +8,12 @@
     <ProjectReference Include="..\eCommerce_DI\ECommerce_Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Administrator\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.1.1" />
+  </ItemGroup>
+
 </Project>

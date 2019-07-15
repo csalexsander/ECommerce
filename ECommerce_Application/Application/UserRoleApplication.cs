@@ -1,4 +1,5 @@
-﻿using ECommerce_Application.Interface;
+﻿using AutoMapper;
+using ECommerce_Application.Interface;
 using ECommerce_Domain.Entities;
 using ECommerce_Domain.InterfaceServices;
 using System;
@@ -9,7 +10,7 @@ namespace ECommerce_Application.Application
 {
     public class UserRoleApplication : BaseApplication<UserRole>, IUserRoleApplication
     {
-        public UserRoleApplication(IUserRoleService baseService) : base(baseService)
+        public UserRoleApplication(IUserRoleService baseService, IMapper mapper) : base(baseService, mapper)
         {
         }
     }

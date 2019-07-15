@@ -1,4 +1,5 @@
-﻿using ECommerce_Application.Interface;
+﻿using AutoMapper;
+using ECommerce_Application.Interface;
 using ECommerce_Domain.Entities;
 using ECommerce_Domain.InterfaceServices;
 using System;
@@ -9,7 +10,7 @@ namespace ECommerce_Application.Application
 {
     public class UserAddressApplication : BaseApplication<UserAddress>, IUserAddressApplication
     {
-        public UserAddressApplication(IUserAddressService baseService) : base(baseService)
+        public UserAddressApplication(IUserAddressService baseService, IMapper mapper) : base(baseService, mapper)
         {
         }
     }

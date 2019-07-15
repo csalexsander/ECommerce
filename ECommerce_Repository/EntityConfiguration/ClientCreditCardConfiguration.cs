@@ -13,6 +13,8 @@ namespace ECommerce_Repository.EntityConfiguration
         {
             entity.HasKey(x => x.Id);
 
+            entity.Property(x => x.Id).ValueGeneratedOnAdd();
+
             entity.Property(x => x.Number).IsRequired();
 
             entity.Property(x => x.SecurityCode).IsRequired();

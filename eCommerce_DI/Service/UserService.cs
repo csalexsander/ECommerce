@@ -22,18 +22,28 @@ namespace ECommerce_Domain.Service
             _baseRepository = repository;
         }
 
-        public bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType)
+        public bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType, ref string ErrorMessage)
         {
             User user = _baseRepository.Find(x => x.UserName == userName).FirstOrDefault();
 
-            if (user == null || !user.HasAccess(LoginType))
+            if (user == null)
+            {
+                ErrorMessage = "User not found";
+                return false;
+            }
+
+            if (!user.HasAccess(LoginType, ref ErrorMessage))
             {
                 return false;
             }
 
             password = CriptoUtilitary.sha256encrypt(password);
 
-            return user.Password.Equals(password);
+            bool isValid = user.Password.Equals(password);
+
+            ErrorMessage = isValid ? string.Empty : "Username or passaword are incorrect";
+
+            return isValid;
         }
 
         public User Save(User user)

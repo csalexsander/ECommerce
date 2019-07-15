@@ -10,7 +10,7 @@ namespace ECommerce_Domain.InterfaceServices
     public interface IUserService
     {
         IEnumerable<User> GetAllActives();
-        bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType);
+        bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType, ref string ErrorMessage);
         User Save(User user);
         User Get(long Id);
         IEnumerable<User> GetAll();
