@@ -11,6 +11,12 @@ namespace ECommerce_Domain.Service
     {
         public UserRoleService(IUserRoleRepository repository) : base(repository)
         {
+            
+        }
+
+        public UserRole GetFirstOrDefaultById(long Id)
+        {
+            return GetFirstOrDefault(x => x.Id == Id);
         }
     }
 }

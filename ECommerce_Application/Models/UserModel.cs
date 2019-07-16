@@ -14,9 +14,8 @@ namespace ECommerce_Application.Models
         public string Password { get; set; }
         public bool UserBlock { get; set; }
         public bool PasswordReset { get; set; }
+        public bool Remember { get; set; }
         public string Email { get; set; }
-        public virtual List<UserAddressModel> Addresses { get; set; }
-        public virtual List<ClientCreditCardModel> CreditCards { get; set; }
 
     }
 }

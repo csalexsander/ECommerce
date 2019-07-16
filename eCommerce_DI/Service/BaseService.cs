@@ -52,11 +52,6 @@ namespace ECommerce_Domain.Service
             return _baseRepository.Find(predicate);
         }
 
-        public TEntity Get(long Id)
-        {
-            return _baseRepository.Get(Id);
-        }
-
         public IEnumerable<TEntity> GetAll()
         {
             return _baseRepository.GetAll();
@@ -70,6 +65,10 @@ namespace ECommerce_Domain.Service
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
             _baseRepository.RemoveRange(entities);
+        }
+        protected TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _baseRepository.GetFirstOrDefault(predicate);
         }
     }
 }

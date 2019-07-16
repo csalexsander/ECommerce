@@ -11,7 +11,7 @@ namespace ECommerce_Depence_Injector.AutoMapper
     {
         public EntityToModel()
         {
-            CreateMap<User, UserModel>();
+            CreateMap<User, UserModel>().ForMember(x => x.Password, obj => obj.Ignore());
             CreateMap<City, CityModel>();
             CreateMap<State, StateModel>();
             CreateMap<Country, CountryModel>();

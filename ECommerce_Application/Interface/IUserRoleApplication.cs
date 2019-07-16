@@ -7,5 +7,6 @@ namespace ECommerce_Application.Interface
 {
     public interface IUserRoleApplication : IBaseApplication<UserRole>
     {
+        UserRole GetFirstOrDefaultById(long Id);
     }
 }

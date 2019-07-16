@@ -6,7 +6,10 @@ using AutoMapper;
 using ECommerce_Application.Interface;
 using ECommerce_Application.Models;
 using ECommerce_Commons.Enumerators;
+using ECommerce_Depence_Injector.Authenticate;
 using ECommerce_Domain.Entities;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce_Administrator.Controllers
@@ -39,6 +42,11 @@ namespace ECommerce_Administrator.Controllers
 
                     errorMessage = authorized ? "The user is authenticated" : errorMessage;
 
+                    var userModel = _mapper.Map<UserModel>(_userApplication.GetFirstOrDefaultUserName(model.UserName));
+                    userModel.Remember = model.Remember;
+
+                    HttpContext.AuthenticateWeb(userModel);
+
                     return Json(new ReturnDefault(authorized, errorMessage));
                 }
 
@@ -47,8 +55,16 @@ namespace ECommerce_Administrator.Controllers
             catch (Exception ex)
             {
                 //todo: new method to save exception in a text file
-                return Json(new ReturnDefault(false, "Please contact the support team", "An error has occurred"));
+                return Json(new ReturnDefault(false, "An error has occurred, Please contact the support team"));
             }
         }
-    }
+
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index");
+        }
+
+    } 
 }

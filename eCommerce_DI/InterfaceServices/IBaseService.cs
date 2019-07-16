@@ -7,7 +7,6 @@ namespace ECommerce_Domain.InterfaceServices
 {
     public interface IBaseService<TEntity> where TEntity : class
     {
-        TEntity Get(long Id);
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
         TEntity Save(TEntity entity);

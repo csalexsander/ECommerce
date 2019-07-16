@@ -15,23 +15,25 @@ namespace ECommerce_Domain.Service
     {
         readonly IUserAddressService _userAddressService;
         readonly IUserRepository _baseRepository;
+        readonly IUserRoleRepository _userRoleRepositorio;
 
-        public UserService(IUserRepository repository, IUserAddressService userAddressService)
+        public UserService(IUserRepository repository, IUserAddressService userAddressService, IUserRoleRepository userRoleRepository)
         {
             _userAddressService = userAddressService;
             _baseRepository = repository;
+            _userRoleRepositorio = userRoleRepository;
         }
 
         public bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType, ref string ErrorMessage)
         {
-            User user = _baseRepository.Find(x => x.UserName == userName).FirstOrDefault();
+            User user = _baseRepository.GetFirstOrDefault(x => x.UserName.Equals(userName), true);
 
             if (user == null)
             {
                 ErrorMessage = "User not found";
                 return false;
             }
-
+            
             if (!user.HasAccess(LoginType, ref ErrorMessage))
             {
                 return false;
@@ -81,7 +83,7 @@ namespace ECommerce_Domain.Service
 
                 _baseRepository.CommitTransaction();
 
-                return _baseRepository.Get(userAdded.Id);
+                return _baseRepository.GetFirstOrDefault(userbd => userbd.Id == userAdded.Id);
             }
             catch (Exception ex)
             {
@@ -124,11 +126,6 @@ namespace ECommerce_Domain.Service
             _userAddressService.Dispose();
         }
 
-        public User Get(long Id)
-        {
-            return _baseRepository.Get(Id);
-        }
-
         public IEnumerable<User> GetAll()
         {
             return _baseRepository.GetAll();
@@ -152,6 +149,21 @@ namespace ECommerce_Domain.Service
         public int Count(Expression<Func<User, bool>> predicate)
         {
             return _baseRepository.Count(predicate);
+        }
+
+        public User GetFirstOrDefault(Expression<Func<User, bool>> predicate)
+        {
+            return _baseRepository.GetFirstOrDefault(predicate);
+        }
+
+        public User GetFirstOrDefaultByUserName(string UserName)
+        {
+            return GetFirstOrDefault(x => x.UserName.Equals(UserName));
+        }
+
+        public User GetFirstOrDefaultById(long Id)
+        {
+            return GetFirstOrDefault(x => x.Id == Id);
         }
     }
 }

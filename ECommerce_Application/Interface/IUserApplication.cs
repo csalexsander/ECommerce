@@ -12,7 +12,8 @@ namespace ECommerce_Application.Interface
         IEnumerable<User> GetAllActives();
         bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType, ref string ErroMessage);
         User Save(User user);
-        User Get(long Id);
+        User GetFirstOrDefaultUserName(string UserName);
+        User GetFirstOrDefaultId(long Id);
         IEnumerable<User> GetAll();
         IEnumerable<User> Find(Expression<Func<User, bool>> predicate);
         void Remove(User entity);

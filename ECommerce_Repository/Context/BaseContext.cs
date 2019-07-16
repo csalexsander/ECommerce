@@ -53,30 +53,7 @@ namespace ECommerce_Repository.Context
                 {
                     entry.Property(nameof(BaseEntity.CreationDate)).IsModified = false;
                 }
-            }
-
-            foreach (var entry in ChangeTracker.Entries().Where(e => e.Entity.GetType().GetProperty(nameof(User.Password)) != null))
-            {
-                if (entry.State == EntityState.Added)
-                {
-                    var currentValue = entry.Property(nameof(User.Password)).CurrentValue.ToString();
-
-                    entry.Property(nameof(User.Password)).CurrentValue = CriptoUtilitary.sha256encrypt(currentValue);
-                }
-                else
-                {
-                    var currentValue = entry.Property(nameof(User.Password)).CurrentValue.ToString();
-
-                    if (string.IsNullOrWhiteSpace(currentValue))
-                    {
-                        entry.Property(nameof(User.Password)).IsModified = false;
-                    }
-                    else
-                    {
-                        entry.Property(nameof(User.Password)).CurrentValue = CriptoUtilitary.sha256encrypt(currentValue);
-                    }                    
-                }
-            }
+            }           
 
             return base.SaveChanges();
         }

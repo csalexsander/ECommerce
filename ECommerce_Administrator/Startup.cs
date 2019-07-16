@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ECommerce_Depence_Injector.AutoMapper;
 using ECommerce_Depence_Injector.Injection;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,6 +35,14 @@ namespace ECommerce_Administrator
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.LoginPath = "/Login";
+                options.LogoutPath = "/Login/Logout";
+                options.Cookie.Name = "ECommerce.Administrator";
+                options.Cookie.MaxAge = new TimeSpan(12, 0, 0);
+            });
+
             services.DependenceInjector();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -55,6 +64,7 @@ namespace ECommerce_Administrator
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

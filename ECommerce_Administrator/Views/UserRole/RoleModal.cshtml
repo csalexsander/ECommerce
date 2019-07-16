@@ -1,0 +1,48 @@
+﻿@model ECommerce_Application.Models.UserRoleModel
+@using ECommerce_Commons.Enumerators;
+
+<div class="modal fade" id="RoleModal" role="dialog">
+    <div class="modal-dialog">
+        <ec-form class="" action="Save" controller="UserRole" inicio="userRole.StartNewRole" completo="userRole.CompleteNewRole" falha="userRole.FailNewRole" sucesso="userRole.SuccessNewRole">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title float-left">User Role</h4>
+                    <button type="button" class="close float-right" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="col-md-12 row">
+                        <div class="form-group col-md-12">
+                            <label>Name</label>
+                            <input class="form-control col-md-12" asp-for="Name" />
+                            <span class="text-danger" asp-validation-for="Name"></span>
+                            <input type="hidden" asp-for="Id" />
+                        </div>
+                    </div>
+                    <div class="col-md-12 row">
+                        <div class="form-group col-md-12">
+                            <label>Level Access</label>
+                            <div class="form-inline">
+                                <div class="radio m-r-10">
+                                    <label><input type="radio" class="m-r-5" value="@((int)Enumerators.AccessLevel.Administrator)" id="@Enumerators.AccessLevel.Administrator.ToString()" name="AccessLevel">@Enumerators.AccessLevel.Administrator.ToString()</label>
+                                </div>
+                                <div class="radio m-r-10">
+                                    <label><input type="radio" class="m-r-5" value="@((int)Enumerators.AccessLevel.Internal)" id="@Enumerators.AccessLevel.Internal.ToString()" name="AccessLevel" checked>@Enumerators.AccessLevel.Internal.ToString()</label>
+                                </div>
+                                <div class="radio m-r-10">
+                                    <label><input type="radio" class="m-r-5" value="@((int)Enumerators.AccessLevel.Client)" id="@Enumerators.AccessLevel.Client.ToString()" name="AccessLevel">@Enumerators.AccessLevel.Client.ToString()</label>
+                                </div>
+                            </div>
+                            <span class="text-danger" id="errorRadio"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </ec-form>
+    </div>
+</div>

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using ECommerce_Depence_Injector.Authenticate
+@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -13,6 +15,8 @@
     <!-- Custom styles for this template-->
     <link href="~/themes/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="~/lib/pNotify/PNotifyBrightTheme.css" rel="stylesheet" />
+    <link href="~/css/ECommercePNotify.css" rel="stylesheet" />
+    @RenderSection("Head", false)
 </head>
 <body id="page-top">
     <!-- Page Wrapper -->
@@ -30,12 +34,18 @@
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <!-- Divider -->
+            <li class="nav-item active">
+                <a class="nav-link" href="/UserRole">
+                    <i class="fas fa-fw fa-user-shield"></i>
+                    <span>Role of the user</span>
+                </a>
+            </li>
             <hr class="sidebar-divider d-none d-md-block">
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -54,16 +64,9 @@
                         <i class="fa fa-bars"></i>
                     </button>
                     <!-- Topbar Search -->
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <h2>@ViewData["TiTle"]</h2>
+                    </div>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -192,8 +195,8 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@Context.GetClaimValue(ClaimTypes.Name)</span>
+                                <img class="img-profile rounded-circle" src="~/image/Hopstarter-Soft-Scraps-User-Administrator-Blue.ico">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -210,7 +213,7 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="/Login/Logout">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -266,9 +269,16 @@
     <script src="~/themes/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
     <script src="~/themes/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Custom scripts for all pages-->
     <script src="~/lib/pNotify/PNotify.js"></script>
     <script src="~/lib/pNotify/PNotifyAnimate.js"></script>
+    <script src="~/lib/pNotify/PNotifyCallbacks.js"></script>
+    <script src="~/lib/pNotify/PNotifyButtons.js"></script>
+    <script src="~/lib/pNotify/PNotifyConfirm.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/jquery-ajax-unobstrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/site.js"></script>
     <script src="~/themes/js/sb-admin-2.min.js"></script>
+    @RenderSection("Scripts", false)
 </body>
 </html>

@@ -20,6 +20,21 @@ namespace ECommerce_Repository.Repositories
             _Context = context;
         }
 
+        protected IQueryable<TEntity> GetQuery(bool AllIncludes)
+        {
+            var query = _Context.Set<TEntity>().AsQueryable();
+
+            if (AllIncludes)
+            {
+                foreach (var property in _Context.Model.FindEntityType(typeof(TEntity)).GetNavigations())
+                {
+                    query = query.Include(property.Name);
+                }
+            }
+
+            return query;
+        }
+
         public TEntity Add(TEntity entity)
         {
             var entityReturn = _Context.Set<TEntity>().Add(entity);
@@ -38,19 +53,19 @@ namespace ECommerce_Repository.Repositories
             return _Context.SaveChanges();
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> predicate, bool AllIncludes = false)
         {
-            return _Context.Set<TEntity>().Where(predicate);
+            return GetQuery(AllIncludes).FirstOrDefault(predicate);
         }
 
-        public TEntity Get(long Id)
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, bool AllIncludes = false)
         {
-            return _Context.Set<TEntity>().Find(Id);
+            return GetQuery(AllIncludes).Where(predicate);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll(bool AllIncludes = false)
         {
-            return _Context.Set<TEntity>().ToList();
+            return GetQuery(AllIncludes).ToList();
         }
 
         public void Remove(TEntity entity)
@@ -65,9 +80,9 @@ namespace ECommerce_Repository.Repositories
             Complete();
         }
 
-        public int Count(Expression<Func<TEntity, bool>> predicate)
+        public int Count(Expression<Func<TEntity, bool>> predicate, bool AllIncludes = false)
         {
-            return Find(predicate).Count();
+            return Find(predicate, AllIncludes).Count();
         }
 
         public void Update(TEntity entity)

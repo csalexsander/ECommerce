@@ -36,11 +36,6 @@ namespace ECommerce_Application.Application
             return _userService.Find(predicate);
         }
 
-        public User Get(long Id)
-        {
-            return _userService.Get(Id);
-        }
-
         public IEnumerable<User> GetAll()
         {
             return _userService.GetAll();
@@ -51,7 +46,17 @@ namespace ECommerce_Application.Application
             return _userService.GetAllActives();
         }
 
-        public bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType,ref string ErrorMessage)
+        public User GetFirstOrDefaultId(long Id)
+        {
+            return _userService.GetFirstOrDefaultById(Id);
+        }
+
+        public User GetFirstOrDefaultUserName(string UserName)
+        {
+            return _userService.GetFirstOrDefaultByUserName(UserName);
+        }
+
+        public bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType, ref string ErrorMessage)
         {
             return _userService.LoginIsValid(userName, password, LoginType, ref ErrorMessage);
         }

@@ -36,12 +36,13 @@ namespace ECommerce_Application.Models
         {
         }
 
-        public ReturnDefault(bool success, string title, object data) : this(success, string.Empty, title, data, string.Empty, false)
+        public ReturnDefault(bool success, string message, object data) : this(success, message, string.Empty, data, string.Empty, false)
         {
         }
 
         public ReturnDefault(bool success, string url, bool redirect) :this(success, string.Empty, string.Empty, null, url, redirect)
         {            
         }
+
     }
 }

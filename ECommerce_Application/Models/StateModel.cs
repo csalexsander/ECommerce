@@ -8,6 +8,5 @@ namespace ECommerce_Application.Models
     {
         public string Name { get; set; }
         public CountryModel Country { get; set; }
-        public virtual List<CityModel> Cities { get; set; }
     }
 }
