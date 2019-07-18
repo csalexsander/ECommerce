@@ -17,7 +17,9 @@ HTML
 JS
 Jquery
 
-A primeira fase será o desenvolvimento das Camadas de Dominio e Repositorio com um desenvolvimento baseado em testes
+A primeira fase será o desenvolvimento das Camadas de Dominio e Repositorio
+
+Uma adesão de TDD entre as fases
 
 A Segunda fase consistirá na implementação de testes de Integração para a validação da logica de negocio e persistencia
 
