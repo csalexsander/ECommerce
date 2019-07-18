@@ -98,5 +98,18 @@ var Global = {
         let Icon = $($botao).find("i");
         $($botao).prop("disabled", false).removeClass("disabled");
         $(Icon).removeClass("fa-spin fa-spinner");
+    },
+    _InicializaDatatable: function (seletor) {
+        $(seletor).DataTable({
+            "lengthChange": false,
+            "autoWidth": true,
+            "dom": 'r<"pull-left"f><"dtable-margin"t>i<"float-right"p>'
+        });
+    },
+    _GetEditLinkTable: function (Id, Label) {
+        return `<td><a href="javascript:void(0)" data-codigo="${Id}" name="EditClick">${Label}</a></td>`;
+    },
+    _GetDeleteLinkTable: function (Id) {
+        return `<td><a href="javascript:void(0)" data-codigo="${Id}" name="DeleteClick">Delete</a></td>`;
     }
-}
+};

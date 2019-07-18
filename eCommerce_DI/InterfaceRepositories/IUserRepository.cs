@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ECommerce_Domain.InterfaceRepositories
 {
-    public interface IUserRepository
+    public interface IUserRepository : IBaseRepository<User>
     {
         IEnumerable<User> GetAllActives();
         User GetUserComplete(long Id, Enumerators.LoginType loginType);

@@ -46,10 +46,21 @@ namespace ECommerce_Application.Application
             return _userService.GetAllActives();
         }
 
+        public IEnumerable<User> GetAllWithIncludes()
+        {
+            return _userService.GetAllWithIncludes();
+        }
+
         public User GetFirstOrDefaultId(long Id)
         {
-            return _userService.GetFirstOrDefaultById(Id);
+            return GetFirstOrDefaultById(Id, false);
         }
+
+        public User GetFirstOrDefaultById(long Id, bool complete)
+        {
+            return _userService.GetFirstOrDefaultById(Id, complete);
+        }
+
 
         public User GetFirstOrDefaultUserName(string UserName)
         {

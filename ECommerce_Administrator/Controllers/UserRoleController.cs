@@ -23,7 +23,7 @@ namespace ECommerce_Administrator.Controllers
         }
 
         // GET: UserRole
-        public ActionResult Index()
+        public IActionResult Index()
         {
             if (!UserHasSession)
             {
@@ -35,7 +35,7 @@ namespace ECommerce_Administrator.Controllers
             return View(Model);
         }
 
-        public ActionResult Role(long id)
+        public IActionResult Role(long id)
         {
             if (id == 0)
             {
@@ -54,7 +54,7 @@ namespace ECommerce_Administrator.Controllers
             return Json(new ReturnDefault(true, "", model));
         }
 
-        public ActionResult Save(UserRoleModel user)
+        public IActionResult Save(UserRoleModel user)
         {
             try
             {
@@ -64,14 +64,38 @@ namespace ECommerce_Administrator.Controllers
                 }
 
                 string successMessage = user.Id == 0 ? "Role added" : "edited role";
-
-                user.Active = true;
-
+                
                 var result = _mapper.Map<UserRoleModel>(_application.Save(_mapper.Map<UserRole>(user)));
 
                 return Json(new ReturnDefault(true, successMessage, result));
             }
             catch (Exception)
+            {
+                return Json(new ReturnDefault(false, "An error has occurred, Please contact the support team"));
+            }
+        }
+
+        public IActionResult Delete(long Id)
+        {
+            try
+            {
+                if (Id == 0)
+                {
+                    return View(new ReturnDefault(false, "User role not found"));
+                }
+
+                var role = _application.GetFirstOrDefaultById(Id);
+
+                if (role == null)
+                {
+                    return View(new ReturnDefault(false, "User role not found"));
+                }
+
+                _application.Remove(role);
+
+                return Json(new ReturnDefault(true, "Role removed"));
+            }
+            catch (Exception ex)
             {
                 return Json(new ReturnDefault(false, "An error has occurred, Please contact the support team"));
             }

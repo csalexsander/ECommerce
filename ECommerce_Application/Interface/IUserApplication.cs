@@ -15,9 +15,11 @@ namespace ECommerce_Application.Interface
         User GetFirstOrDefaultUserName(string UserName);
         User GetFirstOrDefaultId(long Id);
         IEnumerable<User> GetAll();
+        IEnumerable<User> GetAllWithIncludes();
         IEnumerable<User> Find(Expression<Func<User, bool>> predicate);
         void Remove(User entity);
         void RemoveRange(IEnumerable<User> entities);
+        User GetFirstOrDefaultById(long Id, bool complete);
         int Count(Expression<Func<User, bool>> predicate);
         void Dispose();
     }

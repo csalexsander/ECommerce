@@ -8,6 +8,7 @@ var userRole = {
     $modal: $("#RoleModal"),
     $Name: $("#Name"),
     $Id: $("#Id"),
+    $Active: $("#Active"),
     $RadioClient: $("#Client"),
     $RadioInternal: $("#Internal"),
     $RadioAdministrator: $("#Administrator"),
@@ -19,11 +20,7 @@ var userRole = {
     },
     _events: function () {
 
-        $("#UserRoleTable").dataTable({
-            "lengthChange": false,
-            "autoWidth": true,
-            "dom": 'r<"pull-left"f><"dtable-margin"t>i<"float-right"p>'
-        });
+        Global._InicializaDatatable("#UserRoleTable");
 
         $(document).on("click", "a[name='EditClick']", function (e) {
             e.preventDefault();
@@ -31,9 +28,16 @@ var userRole = {
             userRole._ajaxUserRoleData($(this).data("codigo"));
         });
 
+        $(document).on("click", "a[name='DeleteClick']", function (e) {
+            e.preventDefault();
+
+            userRole._DeleteRoleAjax($(this).data("codigo"));
+        });
+
         userRole.$modal.on('hidden.bs.modal', function () {
             userRole.$Name.val("");
             userRole.$Id.val(0);
+            userRole.$Active.prop("checked", "checked");
         });
     },
     _ajaxUserRoleData: function (id) {
@@ -62,6 +66,7 @@ var userRole = {
 
             userRole.$Id.val(result.data.id);
             userRole.$Name.val(result.data.name);
+            userRole.$Active.prop("checked", result.data.active);
 
             switch (result.data.accessLevel) {
                 case 1:
@@ -114,9 +119,10 @@ var userRole = {
             return;
         }
 
-        let idtd = userRole._GetIdTd(result.data.idToString);
+        let idtd = Global._GetEditLinkTable(result.data.id, result.data.idToString);
+        let deletetd = Global._GetDeleteLinkTable(result.data.id);
 
-        let row = [idtd, result.data.name, result.data.accessLevelTostring, result.data.activeToString, result.data.dateToString];
+        let row = [idtd, result.data.name, result.data.accessLevelTostring, result.data.activeToString, result.data.dateToString, deletetd];
 
         $(userRole.$DataTable).DataTable().row.add(row).draw();
     },
@@ -126,7 +132,44 @@ var userRole = {
     CompleteNewRole: function () {
         userRole.notice.remove();
     },
-    _GetIdTd: function (Id) {
-        return `<a href="javascript:void(0)" data-codigo="${Id}" name="EditClick">${Id}</a>`;
+    _GetIdTd: function (Id, IdString) {
+        return `<a href="javascript:void(0)" data-codigo="${Id}" name="EditClick">${IdString}</a>`;
+    },
+    _GetDeleteTd: function (Id) {
+        return `<a href="javascript:void(0)" data-codigo="${Id}" name="DeleteClick">Delete</a>`;
+    },
+    _DeleteRoleAjax: function (Id) {
+
+        userRole.notice = Global._AdicioneNotice("Searching data", "loading");
+
+        let config = {
+            type: "POST",
+            url: "UserRole/Delete",
+            data: {
+                "Id": Id
+            }
+        };
+
+        $.ajax(config).done(function (result) {
+
+            if (result === null || result === undefined) {
+                Global._AdicioneNoticeTemporario("An erro has ocurred, please contact the suport team", "error");
+                return;
+            }
+
+            if (!result.success) {
+                Global._AdicioneNoticeTemporario(result.message, "error");
+                return;
+            }
+
+            Global._AdicioneNoticeTemporario(result.message);
+
+            window.location.reload();
+
+        }).fail(function () {
+            Global._AdicioneNoticeTemporario("An erro has ocurred, please contact the suport team", "error");
+        }).always(function () {
+            userRole.notice.remove();
+        });
     }
 };

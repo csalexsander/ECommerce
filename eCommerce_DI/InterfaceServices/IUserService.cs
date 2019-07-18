@@ -14,7 +14,9 @@ namespace ECommerce_Domain.InterfaceServices
         User Save(User user);
         User GetFirstOrDefaultByUserName(string UserName);
         User GetFirstOrDefaultById(long Id);
+        User GetFirstOrDefaultById(long Id, bool complete);
         IEnumerable<User> GetAll();
+        IEnumerable<User> GetAllWithIncludes();
         IEnumerable<User> Find(Expression<Func<User, bool>> predicate);
         void Remove(User entity);
         void RemoveRange(IEnumerable<User> entities);

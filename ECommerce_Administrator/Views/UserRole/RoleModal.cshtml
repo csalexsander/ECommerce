@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div class="col-md-12 row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-9">
                             <label>Level Access</label>
                             <div class="form-inline">
                                 <div class="radio m-r-10">
@@ -35,6 +35,12 @@
                                 </div>
                             </div>
                             <span class="text-danger" id="errorRadio"></span>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-check" id="labelActive">
+                                <input type="checkbox" class="form-check-input" asp-for="Active">
+                                <label class="form-check-label" for="Active">Active</label>
+                            </div>
                         </div>
                     </div>
                 </div>

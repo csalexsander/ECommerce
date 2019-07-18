@@ -32,6 +32,7 @@
                         <th>Access Level</th>
                         <th>Active</th>
                         <th>Creation Date</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,7 @@
                             <td>@item.AccessLevel.ToString()</td>
                             <td>@(item.Active ? "Active" : "Inactive")</td>
                             <td>@item.CreationDate.ToString("dd/MM/yyyy")</td>
+                            <td><a href="javascript:void(0)" data-codigo="@item.Id" name="DeleteClick">Delete</a></td>
                         </tr>
                     }
                 </tbody>

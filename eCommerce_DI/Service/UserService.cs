@@ -131,6 +131,11 @@ namespace ECommerce_Domain.Service
             return _baseRepository.GetAll();
         }
 
+        public IEnumerable<User> GetAllWithIncludes()
+        {
+            return _baseRepository.GetAll(true);
+        }
+
         public IEnumerable<User> Find(Expression<Func<User, bool>> predicate)
         {
             return _baseRepository.Find(predicate);
@@ -163,7 +168,12 @@ namespace ECommerce_Domain.Service
 
         public User GetFirstOrDefaultById(long Id)
         {
-            return GetFirstOrDefault(x => x.Id == Id);
+            return GetFirstOrDefaultById(Id, false);
+        }
+
+        public User GetFirstOrDefaultById(long Id, bool complete)
+        {
+            return _baseRepository.GetFirstOrDefault(x => x.Id == Id, complete);
         }
     }
 }
