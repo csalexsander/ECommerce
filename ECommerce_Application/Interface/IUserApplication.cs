@@ -1,4 +1,5 @@
-﻿using ECommerce_Commons.Enumerators;
+﻿using ECommerce_Application.Models;
+using ECommerce_Commons.Enumerators;
 using ECommerce_Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -7,20 +8,11 @@ using System.Text;
 
 namespace ECommerce_Application.Interface
 {
-    public interface IUserApplication
+    public interface IUserApplication : IBaseApplication<User,UserModel>
     {
-        IEnumerable<User> GetAllActives();
-        bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType, ref string ErroMessage);
-        User Save(User user);
-        User GetFirstOrDefaultUserName(string UserName);
-        User GetFirstOrDefaultId(long Id);
-        IEnumerable<User> GetAll();
-        IEnumerable<User> GetAllWithIncludes();
-        IEnumerable<User> Find(Expression<Func<User, bool>> predicate);
-        void Remove(User entity);
-        void RemoveRange(IEnumerable<User> entities);
-        User GetFirstOrDefaultById(long Id, bool complete);
-        int Count(Expression<Func<User, bool>> predicate);
-        void Dispose();
+        bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType, ref string ErrorMessage);
+        IEnumerable<UserModel> GetAllActives();
+        UserModel GetFirstOrDefaultByUsername(string UserName);
+        bool UsernameisValid(string UserName, long Id, ref string ErrorMessage);
     }
 }

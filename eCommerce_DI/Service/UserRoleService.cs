@@ -14,9 +14,38 @@ namespace ECommerce_Domain.Service
             
         }
 
-        public UserRole GetFirstOrDefaultById(long Id)
+        public override UserRole Save(UserRole entity, ref string errorMessage)
         {
-            return GetFirstOrDefault(x => x.Id == Id);
+            var valid = ValidateRoleName(entity.Name, entity.Id, ref errorMessage);
+
+            if (!valid)
+            {
+                return null;
+            }
+
+            return base.Save(entity, ref errorMessage);
         }
+
+        public UserRole GetFirstOrDefaultByName(string name)
+        {
+            return _baseRepository.GetFirstOrDefault(x => x.Name.Equals(name));
+        }
+
+        private bool ValidateRoleName(string name, long Id, ref string errorMessage)
+        {
+            var role = GetFirstOrDefaultByName(name);
+
+            if (role != null)
+            {
+                if (role.Id != Id)
+                {
+                    errorMessage = "this role already exists";
+                    return false;
+                }
+            }
+
+            return true;
+
+        }        
     }
 }

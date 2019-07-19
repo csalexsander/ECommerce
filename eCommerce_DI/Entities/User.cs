@@ -10,6 +10,7 @@ namespace ECommerce_Domain.Entities
     {
         public string Name { get; set; }
         public UserRole Role { get; set; }
+        public long RoleId { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public bool UserBlock { get; set; }
@@ -24,6 +25,11 @@ namespace ECommerce_Domain.Entities
             {
                 ErrorMessage = "Your user is inactive";
                 return Active;
+            }
+
+            if (UserBlock)
+            {
+                ErrorMessage = "Your user is blocked, please check your email box";
             }
 
             bool isClient = Role.AccessLevel == Enumerators.AccessLevel.Client;

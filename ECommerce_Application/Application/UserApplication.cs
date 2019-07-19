@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ECommerce_Application.Interface;
+using ECommerce_Application.Models;
 using ECommerce_Commons.Enumerators;
 using ECommerce_Domain.Entities;
 using ECommerce_Domain.InterfaceServices;
@@ -10,81 +11,37 @@ using System.Text;
 
 namespace ECommerce_Application.Application
 {
-    public class UserApplication : IUserApplication
-    {
-        protected readonly IUserService _userService;
-        protected readonly IMapper _Mapper;
+    public class UserApplication : BaseApplication<User,UserModel>, IUserApplication
+    {        
+        readonly IUserService _userService;
 
-        public UserApplication(IUserService userService, IMapper mapper)
+        public UserApplication(IUserService userService, IMapper mapper) : base(userService, mapper)
         {
             _userService = userService;
-            _Mapper = mapper;
         }
 
-        public int Count(Expression<Func<User, bool>> predicate)
+        public IEnumerable<UserModel> GetAllActives()
         {
-            return _userService.Count(predicate);
+            var result = _userService.GetAllActives();
+
+            return GetEnumerableTModel(result);
         }
 
-        public void Dispose()
+        public UserModel GetFirstOrDefaultByUsername(string UserName)
         {
-            _userService.Dispose();
-        }
+            var result = _userService.GetFirstOrDefaultByUsername(UserName);
 
-        public IEnumerable<User> Find(Expression<Func<User, bool>> predicate)
-        {
-            return _userService.Find(predicate);
-        }
-
-        public IEnumerable<User> GetAll()
-        {
-            return _userService.GetAll();
-        }
-
-        public IEnumerable<User> GetAllActives()
-        {
-            return _userService.GetAllActives();
-        }
-
-        public IEnumerable<User> GetAllWithIncludes()
-        {
-            return _userService.GetAllWithIncludes();
-        }
-
-        public User GetFirstOrDefaultId(long Id)
-        {
-            return GetFirstOrDefaultById(Id, false);
-        }
-
-        public User GetFirstOrDefaultById(long Id, bool complete)
-        {
-            return _userService.GetFirstOrDefaultById(Id, complete);
-        }
-
-
-        public User GetFirstOrDefaultUserName(string UserName)
-        {
-            return _userService.GetFirstOrDefaultByUserName(UserName);
+            return EntityToModel(result);
         }
 
         public bool LoginIsValid(string userName, string password, Enumerators.LoginType LoginType, ref string ErrorMessage)
         {
-            return _userService.LoginIsValid(userName, password, LoginType, ref ErrorMessage);
+            return _userService.LoginIsValid(userName, password, LoginType,ref ErrorMessage);
         }
 
-        public void Remove(User entity)
+        public bool UsernameisValid(string UserName, long Id, ref string ErrorMessage)
         {
-            _userService.Remove(entity);
-        }
-
-        public void RemoveRange(IEnumerable<User> entities)
-        {
-            _userService.RemoveRange(entities);
-        }
-
-        public User Save(User user)
-        {
-            return _userService.Save(user);
+            return _userService.UsernameisValid(UserName, Id,ref ErrorMessage);
         }
     }
 }

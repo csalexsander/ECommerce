@@ -14,12 +14,10 @@ namespace ECommerce_Administrator.Controllers
     public class UserRoleController : BaseController
     {
         private IUserRoleApplication _application;
-        private IMapper _mapper;
 
         public UserRoleController(IUserRoleApplication application, IMapper mapper)
         {
             _application = application;
-            _mapper = mapper;
         }
 
         // GET: UserRole
@@ -30,7 +28,7 @@ namespace ECommerce_Administrator.Controllers
                 RedirectToAction(nameof(LoginController.Logout), "Login");
             }
 
-            var Model = _application.GetAll().Select(role => _mapper.Map<UserRoleModel>(role));
+            var Model = _application.GetAll();
 
             return View(Model);
         }
@@ -49,23 +47,27 @@ namespace ECommerce_Administrator.Controllers
                 return View(new ReturnDefault(false, "User role not found"));
             }
 
-            var model = _mapper.Map<UserRoleModel>(userRole);
-
-            return Json(new ReturnDefault(true, "", model));
+            return Json(new ReturnDefault(true, "", userRole));
         }
 
-        public IActionResult Save(UserRoleModel user)
+        public IActionResult Save(UserRoleModel role)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(user.Name) || user.AccessLevel == 0)
+                if (string.IsNullOrWhiteSpace(role.Name) || role.AccessLevel == 0)
                 {
                     return Json(new ReturnDefault(false, "You have required fields not filled in"));
                 }
 
-                string successMessage = user.Id == 0 ? "Role added" : "edited role";
-                
-                var result = _mapper.Map<UserRoleModel>(_application.Save(_mapper.Map<UserRole>(user)));
+                string successMessage = role.Id == 0 ? "Role added" : "edited role";
+
+                string errorMessage = string.Empty;
+                var result = _application.Save(role, ref errorMessage);
+
+                if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    return Json(new ReturnDefault(false, errorMessage));
+                }
 
                 return Json(new ReturnDefault(true, successMessage, result));
             }

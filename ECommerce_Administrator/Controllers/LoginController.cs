@@ -42,7 +42,7 @@ namespace ECommerce_Administrator.Controllers
 
                     errorMessage = authorized ? "The user is authenticated" : errorMessage;
 
-                    var userModel = _mapper.Map<UserModel>(_userApplication.GetFirstOrDefaultUserName(model.UserName));
+                    var userModel = _userApplication.GetFirstOrDefaultByUsername(model.UserName);
                     userModel.Remember = model.Remember;
 
                     HttpContext.AuthenticateWeb(userModel);

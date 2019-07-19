@@ -38,7 +38,7 @@ namespace ECommerce_Depence_Injector.Injection
 
         private static void RegisterApplications(IServiceCollection services)
         {
-            services.AddTransient(typeof(IBaseApplication<>), typeof(BaseApplication<>));
+            services.AddTransient(typeof(IBaseApplication<,>), typeof(BaseApplication<,>));
             services.AddTransient<ICityApplication, CityApplication>();
             services.AddTransient<IClientCreditCardApplication, ClientCreditCardApplication>();
             services.AddTransient<ICountryApplication, CountryApplication>();

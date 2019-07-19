@@ -1,0 +1,57 @@
+﻿@model ECommerce_Application.Models.UserModel
+@{
+    ViewData["Title"] = Model == null ? "New user" : "Edit user";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+    <script src="~/js/Pages/userDetails.js"></script>
+}
+
+<div class="card-body p-t-0">
+    <div class="row">
+        <div class="col-md-12">
+            <ec-form action="SaveUser" controller="Users" inicio="userDetails.Start" completo="userDetails.Complete" falha="userDetails.Fail" sucesso="userDetails.Success">
+                <div class="card-body">
+                    <div class="row">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="col-md-6 form-group">
+                            <label>Name</label>
+                            <input asp-for="Name" class="form-control" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Email</label>
+                            <input asp-for="Email" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Username</label>
+                            <input asp-for="UserName" class="form-control" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Password</label>
+                            <input asp-for="Password" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Role</label>
+                            <select asp-for="RoleId" asp-items="(IEnumerable<SelectListItem>)ViewBag.roles" class="form-control"></select>
+                        </div>
+                        <div class="col-md-6 form-group vertical-align-auto p-l-40">
+                            <input type="checkbox" @(Model.Active ? "checked" : "") class="form-check-input" asp-for="Active">
+                            <label class="form-check-label" for="Active">Active</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" id="SaveUser" class="btn btn-primary float-right">Save</button>
+                            <a id="CancelUser" asp-controller="Users" asp-action="index" class="btn btn-danger float-right m-r-10">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </ec-form>
+        </div>
+    </div>
+</div>

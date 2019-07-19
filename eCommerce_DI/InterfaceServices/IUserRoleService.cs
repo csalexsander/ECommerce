@@ -7,6 +7,6 @@ namespace ECommerce_Domain.InterfaceServices
 {
     public interface IUserRoleService : IBaseService<UserRole>
     {
-        UserRole GetFirstOrDefaultById(long Id);
+
     }
 }

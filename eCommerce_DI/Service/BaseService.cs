@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ECommerce_Domain.Service
 {
-    public class BaseService<TEntity> : IDisposable ,IBaseService<TEntity> where TEntity : class
+    public class BaseService<TEntity> : IDisposable, IBaseService<TEntity> where TEntity : class
     {
         protected readonly IBaseRepository<TEntity> _baseRepository;
 
@@ -16,10 +16,10 @@ namespace ECommerce_Domain.Service
             _baseRepository = repository;
         }
 
-        public TEntity Save(TEntity entity)
+        public virtual TEntity Save(TEntity entity, ref string errorMessage)
         {
             var prop = entity.GetType().GetProperty("Id");
-                        
+
             var Id = Convert.ToInt64(prop.GetValue(entity));
 
             if (Id == 0)
@@ -32,43 +32,48 @@ namespace ECommerce_Domain.Service
             return entity;
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        public virtual void AddRange(IEnumerable<TEntity> entities)
         {
             _baseRepository.AddRange(entities);
         }
 
-        public int Count(Expression<Func<TEntity, bool>> predicate)
+        public virtual int Count(Expression<Func<TEntity, bool>> predicate)
         {
             return _baseRepository.Count(predicate);
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             _baseRepository.Dispose();
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, bool complete = false)
         {
-            return _baseRepository.Find(predicate);
+            return _baseRepository.Find(predicate, complete);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll(bool complete = false)
         {
-            return _baseRepository.GetAll();
+            return _baseRepository.GetAll(complete);
         }
 
-        public void Remove(TEntity entity)
+        public virtual void Remove(TEntity entity)
         {
             _baseRepository.Remove(entity);
         }
 
-        public void RemoveRange(IEnumerable<TEntity> entities)
+        public virtual void RemoveRange(IEnumerable<TEntity> entities)
         {
             _baseRepository.RemoveRange(entities);
         }
-        protected TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> predicate)
+        public virtual TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> predicate, bool complete = false)
         {
-            return _baseRepository.GetFirstOrDefault(predicate);
+            return _baseRepository.GetFirstOrDefault(predicate, complete);
+        }
+
+        public virtual TEntity GetFirstOrDefaultById(long Id, bool complete = false)
+        {
+            return _baseRepository.GetFirstOrDefault(x => (long)x.GetType().GetProperty("Id").GetValue(x) == Id, complete);
         }
     }
 }

@@ -35,68 +35,69 @@ namespace ECommerce_Repository.Repositories
             return query;
         }
 
-        public TEntity Add(TEntity entity)
+        public virtual TEntity Add(TEntity entity)
         {
             var entityReturn = _Context.Set<TEntity>().Add(entity);
             Complete();
             return entityReturn.Entity;
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        public virtual void AddRange(IEnumerable<TEntity> entities)
         {
             _Context.Set<TEntity>().AddRange(entities);
             Complete();
         }
 
-        private int Complete()
+        protected int Complete()
         {
             return _Context.SaveChanges();
         }
 
-        public TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> predicate, bool AllIncludes = false)
+        public virtual TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> predicate, bool AllIncludes = false)
         {
             return GetQuery(AllIncludes).FirstOrDefault(predicate);
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, bool AllIncludes = false)
+        public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, bool AllIncludes = false)
         {
             return GetQuery(AllIncludes).Where(predicate);
         }
 
-        public IEnumerable<TEntity> GetAll(bool AllIncludes = false)
+        public virtual IEnumerable<TEntity> GetAll(bool AllIncludes = false)
         {
             return GetQuery(AllIncludes).ToList();
         }
 
-        public void Remove(TEntity entity)
+        public virtual void Remove(TEntity entity)
         {
             _Context.Set<TEntity>().Remove(entity);
             Complete();
         }
 
-        public void RemoveRange(IEnumerable<TEntity> entities)
+        public virtual void RemoveRange(IEnumerable<TEntity> entities)
         {
             _Context.Set<TEntity>().RemoveRange(entities);
             Complete();
         }
 
-        public int Count(Expression<Func<TEntity, bool>> predicate, bool AllIncludes = false)
+        public virtual int Count(Expression<Func<TEntity, bool>> predicate, bool AllIncludes = false)
         {
             return Find(predicate, AllIncludes).Count();
         }
 
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             _Context.Entry(entity).State = EntityState.Modified;
+
             Complete();
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             _Context.Dispose();
         }
 
-        public void RollBack()
+        public virtual void RollBack()
         {
             _Transaction.Rollback();
         }
@@ -106,7 +107,7 @@ namespace ECommerce_Repository.Repositories
             _Transaction = _Context.Database.BeginTransaction();
         }
 
-        public void CommitTransaction()
+        public virtual void CommitTransaction()
         {
             _Transaction.Commit();
         }

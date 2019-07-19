@@ -12,11 +12,11 @@ namespace ECommerce_Repository.EntityConfiguration
         public void Configure(EntityTypeBuilder<User> entity)
         {
             entity.ToTable("Users");
+            
+            entity.HasKey(x => x.Id);
 
             entity.Property(x => x.Id).ValueGeneratedOnAdd();
 
-            entity.HasKey(x => x.Id);
-            
             entity.Property(e => e.CreationDate).IsRequired();
 
             entity.Property(e => e.Name).IsRequired();
@@ -25,7 +25,7 @@ namespace ECommerce_Repository.EntityConfiguration
 
             entity.Property(e => e.Password).IsRequired();
 
-            entity.HasOne(e => e.Role).WithMany(x => x.Users).OnDelete(DeleteBehavior.SetNull);
+            entity.HasOne(e => e.Role).WithMany(x => x.Users).OnDelete(DeleteBehavior.SetNull).HasForeignKey(x => x.RoleId);
 
             entity.Property(e => e.UserName).IsRequired();
 

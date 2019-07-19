@@ -47,5 +47,17 @@ namespace ECommerce_Repository.Repositories
 
             return query.FirstOrDefault(user => user.UserName == UserName);
         }
+
+        public override void Update(User entity)
+        {
+            _Context.Entry(entity).State = EntityState.Modified;
+
+            if (string.IsNullOrWhiteSpace(entity.Password))
+            {
+                _Context.Entry(entity).Property(x => x.Password).IsModified = false;
+            }
+
+            Complete();
+        }
     }
 }

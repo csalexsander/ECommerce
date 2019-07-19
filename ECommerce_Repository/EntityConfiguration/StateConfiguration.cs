@@ -12,10 +12,10 @@ namespace ECommerce_Repository.EntityConfiguration
         public void Configure(EntityTypeBuilder<State> entity)
         {
             entity.ToTable("States");
+            
+            entity.HasKey(x => x.Id);
 
             entity.Property(x => x.Id).ValueGeneratedOnAdd();
-
-            entity.HasKey(x => x.Id);
 
             entity.Property(e => e.CreationDate).IsRequired();
 

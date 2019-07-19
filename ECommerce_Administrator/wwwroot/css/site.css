@@ -29,3 +29,16 @@
 .m-r-5 {
     margin-right: 5px !important;
 }
+
+.p-t-0 {
+    padding-top: 0px !important;
+}
+
+.vertical-align-auto {
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+}
+
+.p-l-40{
+    padding-left:40px !important;
+}

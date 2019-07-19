@@ -11,16 +11,14 @@ using System.Text;
 
 namespace ECommerce_Domain.Service
 {
-    public class UserService : IUserService, IDisposable
+    public class UserService : BaseService<User>, IUserService, IDisposable
     {
         readonly IUserAddressService _userAddressService;
-        readonly IUserRepository _baseRepository;
         readonly IUserRoleRepository _userRoleRepositorio;
 
-        public UserService(IUserRepository repository, IUserAddressService userAddressService, IUserRoleRepository userRoleRepository)
+        public UserService(IUserRepository repository, IUserAddressService userAddressService, IUserRoleRepository userRoleRepository) : base(repository)
         {
             _userAddressService = userAddressService;
-            _baseRepository = repository;
             _userRoleRepositorio = userRoleRepository;
         }
 
@@ -33,7 +31,7 @@ namespace ECommerce_Domain.Service
                 ErrorMessage = "User not found";
                 return false;
             }
-            
+
             if (!user.HasAccess(LoginType, ref ErrorMessage))
             {
                 return false;
@@ -48,19 +46,26 @@ namespace ECommerce_Domain.Service
             return isValid;
         }
 
-        public User Save(User user)
+        public IEnumerable<User> GetAllActives()
         {
+            return Find(x => x.Active);
+        }
+
+        public override User Save(User user, ref string errorMessage)
+        {
+            bool userNameIsValid = UsernameisValid(user.UserName, user.Id, ref errorMessage);
+
+            if (!userNameIsValid)
+            {
+                return null;
+            }
+            
             if (user.Id == 0)
             {
                 return NewUser(user);
             }
 
-            return UpdateUser(user);
-        }
-
-        public IEnumerable<User> GetAllActives()
-        {
-            return _baseRepository.GetAllActives();
+            return UpdateUser(user, ref errorMessage);
         }
 
         private User NewUser(User user)
@@ -68,6 +73,8 @@ namespace ECommerce_Domain.Service
             try
             {
                 _baseRepository.OpenTransaction();
+
+                user.Password = CriptoUtilitary.sha256encrypt(user.Password);
 
                 var userAdded = _baseRepository.Add(user);
 
@@ -92,7 +99,7 @@ namespace ECommerce_Domain.Service
             }
         }
 
-        private User UpdateUser(User user)
+        private User UpdateUser(User user, ref string errorMessage)
         {
             try
             {
@@ -100,13 +107,16 @@ namespace ECommerce_Domain.Service
 
                 _baseRepository.Update(user);
 
-                foreach (var address in user.Addresses)
+                if (user.Addresses != null)
                 {
-                    address.User = user;
+                    foreach (var address in user.Addresses)
+                    {
+                        address.User = user;
 
-                    var addressAdd = _userAddressService.Save(address);
+                        var addressAdd = _userAddressService.Save(address, ref errorMessage);
 
-                    address.Id = addressAdd.Id;
+                        address.Id = addressAdd.Id;
+                    }
                 }
 
                 _baseRepository.CommitTransaction();
@@ -120,60 +130,33 @@ namespace ECommerce_Domain.Service
             }
         }
 
-        public void Dispose()
+        public bool UsernameisValid(string UserName, long Id, ref string ErrorMessage)
         {
-            _baseRepository.Dispose();
+            var userbd = GetFirstOrDefaultByUsername(UserName);
+
+            if (userbd != null)
+            {
+                if (userbd.Id != Id)
+                {
+                    ErrorMessage = "username is already registered";
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public override void Dispose()
+        {
+            _userRoleRepositorio.Dispose();
             _userAddressService.Dispose();
+
+            base.Dispose();
         }
 
-        public IEnumerable<User> GetAll()
-        {
-            return _baseRepository.GetAll();
-        }
-
-        public IEnumerable<User> GetAllWithIncludes()
-        {
-            return _baseRepository.GetAll(true);
-        }
-
-        public IEnumerable<User> Find(Expression<Func<User, bool>> predicate)
-        {
-            return _baseRepository.Find(predicate);
-        }
-
-        public void Remove(User entity)
-        {
-            _baseRepository.Remove(entity);
-        }
-
-        public void RemoveRange(IEnumerable<User> entities)
-        {
-            _baseRepository.RemoveRange(entities);
-        }
-
-        public int Count(Expression<Func<User, bool>> predicate)
-        {
-            return _baseRepository.Count(predicate);
-        }
-
-        public User GetFirstOrDefault(Expression<Func<User, bool>> predicate)
-        {
-            return _baseRepository.GetFirstOrDefault(predicate);
-        }
-
-        public User GetFirstOrDefaultByUserName(string UserName)
+        public User GetFirstOrDefaultByUsername(string UserName)
         {
             return GetFirstOrDefault(x => x.UserName.Equals(UserName));
-        }
-
-        public User GetFirstOrDefaultById(long Id)
-        {
-            return GetFirstOrDefaultById(Id, false);
-        }
-
-        public User GetFirstOrDefaultById(long Id, bool complete)
-        {
-            return _baseRepository.GetFirstOrDefault(x => x.Id == Id, complete);
         }
     }
 }
